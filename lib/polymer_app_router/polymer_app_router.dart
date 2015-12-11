@@ -50,7 +50,6 @@ class PolymerAppRouter extends PolymerElement {
       parameters = new Map();
     }
     if (currentRouteName != name) {
-      print("router go $name");
       router.go(name, parameters,
           replace: replace,
           startingFrom: startingFrom,
