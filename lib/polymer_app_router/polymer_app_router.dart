@@ -20,25 +20,36 @@ class PolymerAppRouter extends PolymerElement {
   static Router router = new Router(useFragment: true);
   static String defaultPathName;
   static String currentRouteName;
-  static dynamic currentPage;
+  static PolymerAppRouteBehavior currentPage;
 
   @reflectable
-  static goToDefault([Map params]) {
-    if (params == null) {
-      params = new Map();
-    }
+  static goToDefault(
+      {Map parameters,
+      Route startingFrom,
+      bool replace: false,
+      Map queryParameters,
+      bool forceReload: false}) {
     if (defaultPathName != null) {
-      router.go(defaultPathName, params);
+      router.go(defaultPathName, parameters,
+          replace: replace,
+          startingFrom: startingFrom,
+          queryParameters: queryParameters,
+          forceReload: forceReload);
     }
   }
 
   @reflectable
-  static goToName(String name, [Map params]) {
-    if (params == null) {
-      params = new Map();
-    }
-    router.go(name, params);
-  }
+  static goToName(String name,
+          {Map parameters,
+          Route startingFrom,
+          bool replace: false,
+          Map queryParameters,
+          bool forceReload: false}) =>
+      router.go(name, parameters,
+          replace: replace,
+          startingFrom: startingFrom,
+          queryParameters: queryParameters,
+          forceReload: forceReload);
 
   static String get route_change_event => "polymer_app_router.route_change";
 
@@ -66,7 +77,11 @@ class PolymerAppRouter extends PolymerElement {
         if (_item.isDefault) {
           defaultPathName = _item.name;
         }
-        router.root.addRoute(name: item.name, path: item.path, defaultRoute: item.isDefault, enter: enterRoute);
+        router.root.addRoute(
+            name: item.name,
+            path: item.path,
+            defaultRoute: item.isDefault,
+            enter: enterRoute);
       }
     });
     router.listen();
@@ -74,10 +89,11 @@ class PolymerAppRouter extends PolymerElement {
 
   void enterRoute(RouteEnterEvent e) {
     if (e.route.name != currentRouteName) {
-        selected = e.route.name;
-      } else {
-        goToDefault();
-      }
+      selected = e.route.name;
+      currentPage = pages.selectedItem;
+      currentPage.enter(e, e.parameters);
+    } else {
+      goToDefault();
+    }
   }
-
 }

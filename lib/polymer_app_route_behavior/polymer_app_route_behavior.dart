@@ -5,12 +5,13 @@
 library polymer_app_router.polymer_app_route_behavior;
 
 import "package:polymer/polymer.dart";
+import "package:route_hierarchical/client.dart";
 
 @behavior
 abstract class PolymerAppRouteBehavior {
     bool _isDefault;
-    String _name;
-    String _path;
+    String _name = "";
+    String _path = "";
 
     @property
     bool get isDefault => _isDefault;
@@ -36,5 +37,7 @@ abstract class PolymerAppRouteBehavior {
       notifyPath("path", value);
     }
 
+    enter(RouteEnterEvent event, [Map params]) {
+    }
 
 }
