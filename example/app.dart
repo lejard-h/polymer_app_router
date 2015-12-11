@@ -22,19 +22,30 @@ import 'package:polymer_elements/iron_media_query.dart';
 class PolymerApp extends PolymerElement {
     PolymerApp.created() : super.created();
 
+    String _selectedMenu;
+
+    @Property()
+    String get selectedMenu => _selectedMenu;
+
+    set selectedMenu(String value) {
+        _selectedMenu = value;
+        notifyPath("selectedMenu", value);
+    }
+
     String _selected;
 
-    @Property(notify: true)
+    @Property()
     String get selected => _selected;
 
     set selected(String value) {
         _selected = value;
+        selectedMenu = value;
         notifyPath("selected", value);
     }
 
     @reflectable
     void menuItemClicked(event, [_]) {
-        PolymerAppRouter.goToName(selected);
+        PolymerAppRouter.goToName(selectedMenu);
         $['drawerPanel'].closeDrawer();
     }
 
