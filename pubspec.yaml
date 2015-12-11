@@ -1,0 +1,16 @@
+name: polymer_app_router
+description: Routing for polymer
+version: 0.0.1
+author: Hadrien Lejard <hadrien.lejard@gmail.com>
+homepage: https://github.com/lejard-h/polymer_app_router
+
+environment:
+  sdk: '>=1.13.0 <2.0.0'
+
+dependencies:
+  polymer: "^1.0.0-rc.1"
+  polymer_elements: "^1.0.0-rc.1"
+  route_hierarchical: "^0.6.2"
+
+dev_dependencies:
+  test: '>=0.12.0 <0.13.0'
