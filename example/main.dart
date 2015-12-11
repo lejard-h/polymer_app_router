@@ -1,10 +1,7 @@
-/**
- * Created by lejard_h on 11/12/15.
- */
+import 'package:polymer/polymer.dart';
 
-class main {
+import 'package:polymer_app_router/polymer_app_router.dart';
 
-    main() {
-    }
-
+main() async {
+  await initPolymer();
 }

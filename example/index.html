@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Polymer App Router</title>
 
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+
+</head>
+
+
+
+<body unresolved class="fullbleed layout vertical">
+
+<polymer-app-router>
+    <polymer-app-route name="toto" is-default path="/"></polymer-app-route>
+    <polymer-app-route name="tata" path="/tata"></polymer-app-route>
+    <polymer-app-route name="tutu" path="/tutu"></polymer-app-route>
+</polymer-app-router>
+
+<script type="application/dart" src="main.dart"></script>
+<script src="packages/browser/dart.js"></script>
 </body>
 </html>

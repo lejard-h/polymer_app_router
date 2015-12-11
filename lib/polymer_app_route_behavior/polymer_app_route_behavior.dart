@@ -5,16 +5,12 @@
 library polymer_app_router.polymer_app_route_behavior;
 
 import "package:polymer/polymer.dart";
-import "package:web_components/web_components.dart" show HtmlImport;
 
-@PolymerRegister("polymer-app-route")
-class PolymerAppRoute extends PolymerElement {
-    PolymerAppRoute.created() : super.created();
-
+@behavior
+abstract class PolymerAppRouteBehavior {
     bool _isDefault;
     String _name;
     String _path;
-    dynamic _content;
 
     @property
     bool get isDefault => _isDefault;
@@ -33,17 +29,12 @@ class PolymerAppRoute extends PolymerElement {
     }
 
     @property
-    dynamic get content => _content;
-
-    set content(dynamic value) {
-        _content = value;
-        notifyPath("content", value);
-    }
-
-    @property
     String get path => _path;
 
-    set path(String value) => _path = value;
+    set path(String value) {
+      _path = value;
+      notifyPath("path", value);
+    }
 
 
 }
