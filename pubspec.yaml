@@ -1,6 +1,6 @@
 name: polymer_app_router
 description: Routing for polymer
-version: 0.0.1
+version: 0.0.2
 author: Hadrien Lejard <hadrien.lejard@gmail.com>
 homepage: https://github.com/lejard-h/polymer_app_router
 
@@ -9,7 +9,6 @@ environment:
 
 dependencies:
   polymer: "^1.0.0-rc.9"
-  polymer_elements: "^1.0.0-rc.5"
   route_hierarchical: "^0.6.2"
   dart_to_js_script_rewriter: "^0.1.0+4"
   web_components: "^0.12.0"
