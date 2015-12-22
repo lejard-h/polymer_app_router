@@ -1,0 +1,19 @@
+<dom-module id="page-selector">
+
+    <style>
+
+        :host {
+            display: block;
+        }
+
+        :host > ::content > :not(.iron-selected) {
+            display: none !important;
+        }
+
+    </style>
+
+    <template>
+        <content></content>
+    </template>
+
+</dom-module>

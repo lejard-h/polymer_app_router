@@ -9,7 +9,7 @@ library polymer_app_router.polymer_app_route;
 import "package:polymer/polymer.dart";
 import "package:web_components/web_components.dart" show HtmlImport;
 
-import "package:polymer_app_router/polymer_app_route_behavior/polymer_app_route_behavior.dart";
+import "package:polymer_app_router/behavior/polymer_app_route_behavior.dart";
 
 @PolymerRegister("polymer-app-route")
 class PolymerAppRoute extends PolymerElement with PolymerAppRouteBehavior {

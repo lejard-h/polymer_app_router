@@ -3,51 +3,46 @@
  */
 
 @HtmlImport("app.html")
-
 library polymer_app_router.example_app;
 
 import "package:polymer/polymer.dart";
+import "dart:html";
 import "package:web_components/web_components.dart" show HtmlImport;
 import 'package:polymer_app_router/polymer_app_router.dart';
-import 'package:polymer_elements/paper_item.dart';
-import 'package:polymer_elements/paper_menu.dart';
-import 'package:polymer_elements/paper_toolbar.dart';
-import 'package:polymer_elements/paper_drawer_panel.dart';
-import 'package:polymer_elements/paper_header_panel.dart';
-import 'package:polymer_elements/iron_icon.dart';
-import 'package:polymer_elements/iron_icons.dart';
-import 'package:polymer_elements/iron_media_query.dart';
 
 @PolymerRegister("polymer-app")
 class PolymerApp extends PolymerElement {
-    PolymerApp.created() : super.created();
+  PolymerApp.created() : super.created();
 
-    String _selectedMenu;
+  String _selectedMenu;
 
-    @Property()
-    String get selectedMenu => _selectedMenu;
+  @Property()
+  String get selectedMenu => _selectedMenu;
 
-    set selectedMenu(String value) {
-        _selectedMenu = value;
-        notifyPath("selectedMenu", value);
-    }
+  set selectedMenu(String value) {
+    _selectedMenu = value;
+    notifyPath("selectedMenu", value);
+  }
 
-    String _selected;
+  String _selected;
 
-    @Property()
-    String get selected => _selected;
+  @Property()
+  String get selected => _selected;
 
-    set selected(String value) {
-        _selected = value;
-        selectedMenu = value;
-        notifyPath("selected", value);
-    }
+  set selected(String value) {
+    _selected = value;
+    selectedMenu = value;
+    notifyPath("selected", value);
+  }
 
-    @reflectable
-    void menuItemClicked(event, [_]) {
-        PolymerAppRouter.goToName(selectedMenu);
-        $['drawerPanel'].closeDrawer();
-    }
+  @reflectable
+  void goTo(event, [_]) {
+    HtmlElement elem = event.target;
+    PolymerRouter.goToName(elem.text);
+  }
 
-
+  @reflectable
+  void goToDefault(event, [_]) {
+    PolymerRouter.goToDefault();
+  }
 }

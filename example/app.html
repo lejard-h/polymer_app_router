@@ -5,59 +5,20 @@
             font-weight: 300;
             display: block;
         }
-
-        paper-menu {
-            background-color: lightgrey;
-        }
     </style>
     <template>
-        <paper-drawer-panel id="drawerPanel" responsive-width="1280px" transition>
+        <div class="layout horizontal fit">
+            <button on-click="goToDefault">Default</button>
+            <button on-click="goTo">home</button>
+            <button on-click="goTo">one</button>
+            <button on-click="goTo">two</button>
 
-            <div class="nav layout vertical" drawer id="nav">
-                <!-- Nav Content -->
-                <paper-toolbar>
-                    <span class="title"></span>
-                </paper-toolbar>
-                <paper-menu id="menu" valueattr="hash" attr-for-selected="hash" selected="{{selectedMenu}}"
-                            on-click="menuItemClicked"
-                            class="flex">
-                    <paper-item class="menu-item" hash="home">
-                            <span class="layout horizontal">
-                                <span class="flex">Home</span>
-                            </span>
-                    </paper-item>
-                    <paper-item class="menu-item" hash="one">
-                            <span class="layout horizontal" href="/#one">
-                                <span class="flex">One</span>
-                            </span>
-                    </paper-item>
-                    <paper-item class="menu-item" hash="two">
-                            <span class="layout horizontal">
-                                <span class="flex">Two</span>
-                            </span>
-                    </paper-item>
-                </paper-menu>
-            </div>
-
-            <paper-header-panel class="main" main mode="waterfall" style="z-index: 0">
-
-                <!-- Main Toolbar -->
-                <paper-toolbar>
-                    <div class="flex">Polymer App Router</div>
-                </paper-toolbar>
-
-                <!-- Main Content -->
-                <div class="content layout horizontal fit">
-                    <polymer-app-router selected="{{selected}}">
-                        <polymer-app-route name="home" path="" is-default>home</polymer-app-route>
-                        <polymer-app-route name="one" path="one">one</polymer-app-route>
-                        <polymer-app-route name="two" path="two">two</polymer-app-route>
-                    </polymer-app-router>
-                </div>
-
-            </paper-header-panel>
-
-        </paper-drawer-panel>
+            <polymer-app-router selected="{{selected}}">
+                <polymer-app-route name="home" path="" is-default>home</polymer-app-route>
+                <polymer-app-route name="one" path="one">one</polymer-app-route>
+                <polymer-app-route name="two" path="two">two</polymer-app-route>
+            </polymer-app-router>
+        </div>
     </template>
 
 </dom-module>
