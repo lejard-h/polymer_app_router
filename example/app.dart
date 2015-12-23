@@ -14,6 +14,19 @@ import 'package:polymer_app_router/polymer_app_router.dart';
 class PolymerApp extends PolymerElement {
   PolymerApp.created() : super.created();
 
+  PolymerAppRoute createElement(String text) {
+    PolymerAppRoute route = (document.createElement("polymer-app-route") as PolymerAppRoute);
+    route.innerHtml = text;
+    return route;
+  }
+
+  @property
+  List<Page> get pages =>  [
+    new Page("home", "", createElement("home")),
+    new Page("one", "/one", createElement("one")),
+    new Page("two", "/two", createElement("two"))
+  ];
+
   String _selectedMenu;
 
   @Property()

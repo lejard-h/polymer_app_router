@@ -6,12 +6,25 @@ library polymer_app_router.polymer_router_behavior;
 
 import "package:polymer/polymer.dart";
 import "package:route_hierarchical/client.dart";
+import "dart:html";
 
-import "../polymer_app_route/polymer_app_route.dart";
+import "package:polymer_app_router/polymer_app_route/polymer_app_route.dart";
+import "package:polymer_app_router/page_selector/page_selector.dart";
 import "polymer_app_route_behavior.dart";
+import "dart:async";
+import "package:polymer_app_router/page.dart";
 
 @behavior
 abstract class PolymerRouter {
+  List<Page> _pages;
+
+  @Property()
+  List<Page> get pages => _pages;
+
+  set pages(List<Page> values) {
+    _pages = values;
+    notifyPath("pages", values);
+  }
 
   static Router _router = new Router(useFragment: true);
   static String _defaultPathName;
@@ -56,7 +69,7 @@ abstract class PolymerRouter {
 
   static String get route_change_event => "polymer_app_router.route_change";
 
-  PageSelector get pages => $$('#pages');
+  PageSelector get pagesSelector => $$('#pages');
 
   String _selected;
 
@@ -70,9 +83,11 @@ abstract class PolymerRouter {
     }
   }
 
-  void attached() {
-    async(() {
-      pages?.items.forEach((item) {
+  _launchRouter() {
+    if (pagesSelector?.items == null || pagesSelector?.items.isEmpty) {
+      _createRoutes();
+    }
+      pagesSelector?.items.forEach((item) {
         if (item is PolymerAppRouteBehavior) {
           PolymerAppRouteBehavior _item = item;
           if (_item.isDefault) {
@@ -85,19 +100,28 @@ abstract class PolymerRouter {
               enter: enterRoute);
         }
       });
+
       _router.listen();
-    });
+  }
+
+  void attached() {
+    async(_launchRouter);
   }
 
   void enterRoute(RouteEnterEvent e) {
     if (e.route.name != currentRouteName) {
       selected = e.route.name;
       currentRouteName = selected;
-      currentPage = pages.selectedItem;
+      currentPage = pagesSelector.selectedItem;
       currentPage?.enter(e, e.parameters);
     } else {
       goToDefault();
     }
   }
 
+  _createRoutes() {
+    pages?.forEach((Page page) {
+      pagesSelector.append(page.element as HtmlElement);
+    });
+  }
 }

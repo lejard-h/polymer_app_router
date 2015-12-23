@@ -7,6 +7,7 @@ library polymer_app_router.page_selector;
 
 import "package:polymer/polymer.dart";
 import "package:web_components/web_components.dart" show HtmlImport;
+import "package:polymer_app_router/behavior/polymer_app_route_behavior.dart";
 
 @PolymerRegister("page-selector")
 class PageSelector extends PolymerElement {
@@ -54,20 +55,19 @@ class PageSelector extends PolymerElement {
     bool apply = false;
     for (var i = 0; i < this.children.length; i++) {
       if (attrForSelected == null && i == selected && !apply) {
-        this.children[i].classes.add("iron-selected");
+        this.children[i].classes.add("selected");
         selectedItem = this.children[i];
         apply = true;
-      } else if (!apply &&
-          this.children[i].attributes.containsKey(attrForSelected) &&
-          this.children[i].attributes[attrForSelected] == selected) {
-        this.children[i].classes.add("iron-selected");
+      } else if (!apply && attrForSelected == "name" &&
+          (this.children[i] as PolymerAppRouteBehavior).name == selected) {
+        this.children[i].classes.add("selected");
         apply = true;
       } else {
-        this.children[i].classes.remove("iron-selected");
+        this.children[i].classes.remove("selected");
       }
     }
     if (!apply && this.children.isNotEmpty) {
-      this.children[0].classes.add("iron-selected");
+      this.children[0].classes.add("selected");
     }
   }
 }
