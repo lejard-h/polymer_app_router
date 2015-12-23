@@ -22,7 +22,7 @@ then import
         <polymer-app-route name="one" path="one">one</polymer-app-route>
         <polymer-app-route name="two" path="two">two</polymer-app-route>
     </polymer-app-router>
-    
+   
 ## API
 
 ### Navigate to Route name
@@ -33,7 +33,6 @@ then import
           bool replace: false,
           Map queryParameters,
           bool forceReload: false})
-          
           
 ### Navigate to default Route
 
@@ -47,7 +46,8 @@ then import
 ### Current Route name
     
       String PolymerRouter.currentRouteName;
-      
+    
 ### Current Page
 
       PolymerAppRoute PolymerRouter.currentPage;
+      
