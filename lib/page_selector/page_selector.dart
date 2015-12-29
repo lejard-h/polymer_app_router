@@ -30,7 +30,6 @@ class PageSelector extends PolymerElement {
 
   set selected(dynamic value) {
     _selected = value;
-    print("selected $selected");
     _applySelection();
     notifyPath("selected", value);
   }
@@ -54,9 +53,7 @@ class PageSelector extends PolymerElement {
 
   _applySelection() {
     bool apply = false;
-    print("applySelection");
     for (var i = 0; i < this.children.length; i++) {
-      print("name = " + (this.children[i] as PolymerAppRouteBehavior).name);
       if (attrForSelected == null && i == selected && !apply) {
         this.children[i].classes.add("selected");
         selectedItem = this.children[i];
