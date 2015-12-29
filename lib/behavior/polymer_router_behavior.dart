@@ -87,21 +87,21 @@ abstract class PolymerRouter {
     if (pagesSelector?.items == null || pagesSelector?.items.isEmpty) {
       _createRoutes();
     }
-      pagesSelector?.items.forEach((item) {
-        if (item is PolymerAppRouteBehavior) {
-          PolymerAppRouteBehavior _item = item;
-          if (_item.isDefault) {
-            _defaultPathName = _item.name;
-          }
-          _router.root.addRoute(
-              name: item.name,
-              path: item.path,
-              defaultRoute: item.isDefault,
-              enter: enterRoute);
+    pagesSelector?.items.forEach((item) {
+      if (item is PolymerAppRouteBehavior) {
+        PolymerAppRouteBehavior _item = item;
+        if (_item.isDefault) {
+          _defaultPathName = _item.name;
         }
-      });
+        _router.root.addRoute(
+            name: item.name,
+            path: item.path,
+            defaultRoute: item.isDefault,
+            enter: enterRoute);
+      }
+    });
 
-      _router.listen();
+    _router.listen();
   }
 
   void attached() {

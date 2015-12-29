@@ -1,5 +1,12 @@
 <dom-module id="polymer-app-router">
+    <style>
 
+        :host {
+            display: block;
+            height: 100%;
+        }
+
+    </style>
     <template>
         <page-selector id="pages" selected="{{selected}}" attr-for-selected="name">
             <content></content>
