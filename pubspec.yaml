@@ -1,8 +1,8 @@
 name: polymer_app_router
 description: Routing for polymer
-version: 0.0.5+1
-author: Hadrien Lejard <hadrien.lejard@gmail.com>
-homepage: https://github.com/lejard-h/polymer_app_router
+version: 0.0.6
+author: Walletek <hadrien.lejard@gmail.com>
+homepage: https://github.com/walletek/polymer_app_router
 
 environment:
   sdk: '>=1.13.0 <2.0.0'
