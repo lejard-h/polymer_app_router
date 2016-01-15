@@ -8,14 +8,12 @@ import "package:polymer/polymer.dart";
 import "package:route_hierarchical/client.dart";
 import "dart:html";
 
-import "package:polymer_app_router/polymer_app_route/polymer_app_route.dart";
 import "package:polymer_app_router/page_selector/page_selector.dart";
 import "polymer_app_route_behavior.dart";
-import "dart:async";
 import "package:polymer_app_router/page.dart";
 
 @behavior
-abstract class PolymerRouter {
+abstract class PolymerRouterBehavior {
   List<Page> _pages;
 
   @Property()
@@ -29,7 +27,7 @@ abstract class PolymerRouter {
   static Router _router = new Router(useFragment: true);
   static String _defaultPathName;
   static String currentRouteName;
-  static PolymerAppRoute currentPage;
+  static PolymerAppRouteBehavior currentPage;
 
   @reflectable
   static goToDefault(

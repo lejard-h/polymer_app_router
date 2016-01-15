@@ -51,11 +51,11 @@ class PolymerApp extends PolymerElement {
   @reflectable
   void goTo(event, [_]) {
     HtmlElement elem = event.target;
-    PolymerRouter.goToName(elem.text);
+    PolymerRouterBehavior.goToName(elem.text);
   }
 
   @reflectable
   void goToDefault(event, [_]) {
-    PolymerRouter.goToDefault();
+    PolymerRouterBehavior.goToDefault();
   }
 }

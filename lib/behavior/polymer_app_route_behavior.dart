@@ -37,5 +37,5 @@ abstract class PolymerAppRouteBehavior {
     notifyPath("path", value);
   }
 
-  enter(RouteEnterEvent event, [Map params]) {}
+  enter(RouteEnterEvent event, [Map params]);
 }
