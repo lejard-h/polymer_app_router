@@ -1,6 +1,6 @@
 name: polymer_app_router
 description: Routing for polymer
-version: 0.1.0
+version: 0.1.2
 author: Walletek <hadrien.lejard@gmail.com>
 homepage: https://github.com/walletek/polymer_app_router
 
@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   analyzer: ">=0.27.0"
-  polymer: ">=1.0.0-rc.12"
+  polymer: ">=1.0.0-rc.14"
   route_hierarchical: "^0.6.2"
   dart_to_js_script_rewriter: "^0.1.0+4"
   web_components: "^0.12.0"

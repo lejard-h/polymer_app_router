@@ -34,7 +34,7 @@ class PageSelector extends PolymerElement {
     notifyPath("selected", value);
   }
 
-  @property
+  @Property()
   List get items => this.children;
 
   dynamic _selectedItem;

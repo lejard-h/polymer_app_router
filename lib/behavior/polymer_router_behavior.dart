@@ -4,9 +4,10 @@
 
 library polymer_app_router.polymer_router_behavior;
 
+import "dart:html";
+import "dart:async";
 import "package:polymer/polymer.dart";
 import "package:route_hierarchical/client.dart";
-import "dart:html";
 
 import "package:polymer_app_router/page_selector/page_selector.dart";
 import "polymer_app_route_behavior.dart";
@@ -16,11 +17,15 @@ import "package:polymer_app_router/page.dart";
 abstract class PolymerRouterBehavior {
   List<Page> _pages;
 
-  @Property()
+  @Property(notify: true)
   List<Page> get pages => _pages;
 
   set pages(List<Page> values) {
-    _pages = values;
+    if (_pages != values && values != null && values.isNotEmpty) {
+      _pages = values;
+      _router = new Router(useFragment: true);
+      launchRouter();
+    }
     notifyPath("pages", values);
   }
 
@@ -81,10 +86,15 @@ abstract class PolymerRouterBehavior {
     }
   }
 
-  _launchRouter() {
-    if (pagesSelector?.items == null || pagesSelector?.items.isEmpty) {
-      _createRoutes();
+  static attached(PolymerRouterBehavior instance) {
+    if (instance.pages?.isNotEmpty) {
+      instance.launchRouter();
     }
+  }
+
+  launchRouter() async {
+    _createRoutes();
+
     pagesSelector?.items.forEach((item) {
       if (item is PolymerAppRouteBehavior) {
         PolymerAppRouteBehavior _item = item;
@@ -102,10 +112,6 @@ abstract class PolymerRouterBehavior {
     _router.listen();
   }
 
-  void attached() {
-    async(_launchRouter);
-  }
-
   void enterRoute(RouteEnterEvent e) {
     if (e.route.name != currentRouteName) {
       selected = e.route.name;
@@ -118,6 +124,7 @@ abstract class PolymerRouterBehavior {
   }
 
   _createRoutes() {
+    pagesSelector.children.clear();
     pages?.forEach((Page page) {
       pagesSelector.append(page.element as HtmlElement);
     });
