@@ -10,6 +10,8 @@ import "package:route_hierarchical/client.dart";
 @behavior
 abstract class PolymerAppRouteBehavior {
   bool _isDefault;
+  bool isAbstract;
+  String redirectTo;
   String _name = "";
   String _path = "";
 

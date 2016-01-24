@@ -86,47 +86,104 @@ abstract class PolymerRouterBehavior {
     }
   }
 
+  String _internalSelected;
+
+  @Property(reflectToAttribute: true, notify: true)
+  String get internalSelected => _internalSelected;
+
+  set internalSelected(String value) {
+    if (_internalSelected != value && value != null) {
+      _internalSelected = value;
+      notifyPath("internalSelected", value);
+    }
+  }
+
+  createPages() {
+    if (_pages == null) {
+      _pages = new List<Page>();
+    }
+    pagesSelector.children.forEach((elem) {
+      if (elem is PolymerAppRouteBehavior && !_pages.contains(elem)) {
+        _pages.add(new Page(elem.name, elem.path,
+            element: elem,
+            isAbstract: elem.isAbstract,
+            redirectTo: elem.redirectTo,
+            isDefault: elem.isDefault));
+      }
+    });
+  }
+
   static attached(PolymerRouterBehavior instance) {
+    instance.createPages();
     if (instance.pages?.isNotEmpty) {
       instance.launchRouter();
     }
   }
 
-  launchRouter() async {
-    _createRoutes();
-
-    pagesSelector?.items.forEach((item) {
-      if (item is PolymerAppRouteBehavior) {
-        PolymerAppRouteBehavior _item = item;
-        if (_item.isDefault) {
-          _defaultPathName = _item.name;
-        }
-        _router.root.addRoute(
-            name: item.name,
-            path: item.path,
-            defaultRoute: item.isDefault,
-            enter: enterRoute);
+  String findParentPath(String name) {
+    try {
+      Page page = pages.firstWhere((Page p) => p.name == name);
+      String path = page.path;
+      if (page.parent != null) {
+        return "${findParentPath(page.parent)}/$path";
       }
-    });
+      return path;
+    } catch (e) {
+      return "";
+    }
+  }
 
+  _addRoutes(List<Page> p) {
+    p.forEach((Page item) {
+      if (item.isDefault) {
+        _defaultPathName = item.name;
+      }
+
+      String path = item.path;
+      if (item.parent != null) {
+        path = "${findParentPath(item.parent)}/$path";
+      }
+
+      _router.root.addRoute(
+          name: item.name,
+          path: path,
+          defaultRoute: item.isDefault,
+          enter: enterRoute);
+    });
+  }
+
+  launchRouter() async {
+    _addRoutes(pages);
     _router.listen();
+  }
+
+  PolymerAppRouteBehavior findElement(String name) {
+    PolymerAppRouteBehavior elem;
+    try {
+      Page page = pages.firstWhere((Page p) => p.name == name);
+      elem = page.element;
+    } catch (e) {
+      return null;
+    }
+    return elem;
   }
 
   void enterRoute(RouteEnterEvent e) {
     if (e.route.name != currentRouteName) {
-      selected = e.route.name;
-      currentRouteName = selected;
-      currentPage = pagesSelector.selectedItem;
-      currentPage?.enter(e, e.parameters);
+      currentPage = findElement(e.route.name);
+      if (currentPage.isAbstract && currentPage.redirectTo != null) {
+        goToName(currentPage.redirectTo);
+      } else {
+        if (!pagesSelector.children.contains(currentPage)) {
+          pagesSelector.append(currentPage as HtmlElement);
+        }
+        selected = e.route.name;
+        currentRouteName = selected;
+        internalSelected = currentPage.name;
+        currentPage?.enter(e, e.parameters);
+      }
     } else {
       goToDefault();
     }
-  }
-
-  _createRoutes() {
-    pagesSelector.children.clear();
-    pages?.forEach((Page page) {
-      pagesSelector.append(page.element as HtmlElement);
-    });
   }
 }

@@ -53,22 +53,20 @@ class PageSelector extends PolymerElement {
 
   _applySelection() {
     bool apply = false;
-    for (var i = 0; i < this.children.length; i++) {
+    for (var i = 0; i < children.length; i++) {
       if (attrForSelected == null && i == selected && !apply) {
-        this.children[i].classes.add("selected");
-        selectedItem = this.children[i];
+        children[i].classes.add("selected");
+        selectedItem = children[i];
         apply = true;
-      } else if (!apply && attrForSelected == "name" &&
-          (this.children[i] as PolymerAppRouteBehavior).name == selected) {
-        this.children[i].classes.add("selected");
-        selectedItem = this.children[i];
+      } else if (!apply &&
+          attrForSelected == "name" &&
+          ((children[i] as PolymerAppRouteBehavior).name == selected)) {
+        children[i].classes.add("selected");
+        selectedItem = children[i];
         apply = true;
       } else {
-        this.children[i].classes.remove("selected");
+        children[i].classes.remove("selected");
       }
-    }
-    if (!apply && this.children.isNotEmpty) {
-      this.children[0].classes.add("selected");
     }
   }
 }

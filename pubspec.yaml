@@ -1,6 +1,6 @@
 name: polymer_app_router
 description: Routing for polymer
-version: 0.1.2
+version: 0.2.0
 author: Walletek <hadrien.lejard@gmail.com>
 homepage: https://github.com/walletek/polymer_app_router
 
