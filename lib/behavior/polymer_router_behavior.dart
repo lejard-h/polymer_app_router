@@ -113,12 +113,12 @@ abstract class PolymerRouterBehavior {
     });
   }
 
-  static attached(PolymerRouterBehavior instance) {
+  /*static attached(PolymerRouterBehavior instance) {
     instance.createPages();
     if (instance.pages?.isNotEmpty) {
       instance.launchRouter();
     }
-  }
+  }*/
 
   String findParentPath(String name) {
     try {
@@ -175,7 +175,7 @@ abstract class PolymerRouterBehavior {
         if (!pagesSelector.children.contains(currentPage?.element)) {
           pagesSelector.append(currentPage?.element as HtmlElement);
         }
-        if (selected != currentPage?.parent) {
+        if (selected == null || selected != currentPage?.parent) {
           selected = e.route.name;
         }
         currentRouteName = selected;
