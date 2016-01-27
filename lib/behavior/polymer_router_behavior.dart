@@ -32,7 +32,7 @@ abstract class PolymerRouterBehavior {
   static Router _router = new Router(useFragment: true);
   static String _defaultPathName;
   static String currentRouteName;
-  static PolymerAppRouteBehavior currentPage;
+  static Page currentPage;
 
   @reflectable
   static goToDefault(
@@ -157,15 +157,13 @@ abstract class PolymerRouterBehavior {
     _router.listen();
   }
 
-  PolymerAppRouteBehavior findElement(String name) {
-    PolymerAppRouteBehavior elem;
+  Page findElement(String name) {
     try {
-      Page page = pages.firstWhere((Page p) => p.name == name);
-      elem = page.element;
+      return pages.firstWhere((Page p) => p.name == name);
     } catch (e) {
       return null;
     }
-    return elem;
+    return null;
   }
 
   void enterRoute(RouteEnterEvent e) {
@@ -174,13 +172,15 @@ abstract class PolymerRouterBehavior {
       if (currentPage.isAbstract && currentPage.redirectTo != null) {
         goToName(currentPage.redirectTo);
       } else {
-        if (!pagesSelector.children.contains(currentPage)) {
-          pagesSelector.append(currentPage as HtmlElement);
+        if (!pagesSelector.children.contains(currentPage?.element)) {
+          pagesSelector.append(currentPage?.element as HtmlElement);
         }
-        selected = e.route.name;
+        if (selected != currentPage?.parent) {
+          selected = e.route.name;
+        }
         currentRouteName = selected;
         internalSelected = currentPage.name;
-        currentPage?.enter(e, e.parameters);
+        currentPage?.element?.enter(e, e.parameters);
       }
     } else {
       goToDefault();
