@@ -17,6 +17,9 @@ import "package:polymer_app_router/page.dart";
 abstract class PolymerRouterBehavior {
   List<Page> _pages;
 
+  @Property()
+  bool useFragment = false;
+
   @Property(notify: true)
   List<Page> get pages => _pages;
 
@@ -29,10 +32,14 @@ abstract class PolymerRouterBehavior {
     notifyPath("pages", values);
   }
 
-  static Router _router = new Router(useFragment: true);
+  static Router _router;
   static String _defaultPathName;
   static String currentRouteName;
   static Page currentPage;
+
+  static ready(PolymerRouterBehavior instance) {
+  _router = new Router(useFragment: instance.useFragment);
+  }
 
   @reflectable
   static goToDefault(
@@ -41,14 +48,12 @@ abstract class PolymerRouterBehavior {
       bool replace: false,
       Map queryParameters,
       bool forceReload: false}) {
-    if (_defaultPathName != null) {
-      goToName(_defaultPathName,
-          parameters: parameters,
-          replace: replace,
-          startingFrom: startingFrom,
-          queryParameters: queryParameters,
-          forceReload: forceReload);
-    }
+    goToName(_defaultPathName,
+        parameters: parameters,
+        replace: replace,
+        startingFrom: startingFrom,
+        queryParameters: queryParameters,
+        forceReload: forceReload);
   }
 
   @reflectable
@@ -61,13 +66,11 @@ abstract class PolymerRouterBehavior {
     if (parameters == null) {
       parameters = new Map();
     }
-    if (currentRouteName != name) {
-      _router.go(name, parameters,
-          replace: replace,
-          startingFrom: startingFrom,
-          queryParameters: queryParameters,
-          forceReload: forceReload);
-    }
+    _router.go(name, parameters,
+        replace: replace,
+        startingFrom: startingFrom,
+        queryParameters: queryParameters,
+        forceReload: forceReload);
   }
 
   static String get route_change_event => "polymer_app_router.route_change";
